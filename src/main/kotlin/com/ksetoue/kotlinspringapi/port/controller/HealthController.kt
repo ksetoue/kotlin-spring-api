@@ -2,6 +2,16 @@ package com.ksetoue.kotlinspringapi.port.controller
 
 import com.ksetoue.kotlinspringapi.application.HealthApplicationService
 import com.ksetoue.kotlinspringapi.domain.HealthContext
+import com.ksetoue.kotlinspringapi.domain.common.ErrorDetails
+import com.ksetoue.kotlinspringapi.domain.common.InvalidData
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.ArraySchema
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.media.SchemaProperty
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.models.examples.Example
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,6 +24,12 @@ class HealthController(
     private val healthService: HealthApplicationService
 ) {
     @GetMapping("status")
+    @Operation(summary = "Health status of this service", description = "Returns information about the availability of this service")
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", description = "Success Response", content = [Content(mediaType = "application/json", schema = Schema(implementation = HealthContext::class))]),
+        ApiResponse(responseCode = "500", description = "Internal System Error", content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDetails::class))]),
+        ApiResponse(responseCode = "400", description = "Invalid Parameter Request", content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDetails::class))])
+    ])
     fun status(): ResponseEntity<HealthContext> {
         return ResponseEntity(healthService.getStatus(), HttpStatus.OK)
     }
