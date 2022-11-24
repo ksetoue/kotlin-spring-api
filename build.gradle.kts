@@ -27,6 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
+    implementation("io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1")
+    implementation("io.opentracing.contrib:opentracing-spring-cloud-starter:0.5.9")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
