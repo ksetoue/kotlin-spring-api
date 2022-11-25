@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service
 class HealthApplicationService {
     private val logger = LoggerFactory.getLogger(this::class.java)
     fun getStatus(): HealthContext {
-        logger.trace("healthservice")
-        logger.info("get-status")
+        logger.info("getStatus")
         return HealthContext("running")
     }
 }

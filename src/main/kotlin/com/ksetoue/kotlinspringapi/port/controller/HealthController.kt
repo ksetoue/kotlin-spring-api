@@ -3,6 +3,7 @@ package com.ksetoue.kotlinspringapi.port.controller
 import com.ksetoue.kotlinspringapi.application.HealthApplicationService
 import com.ksetoue.kotlinspringapi.domain.HealthContext
 import com.ksetoue.kotlinspringapi.domain.common.ErrorDetails
+import io.opentracing.contrib.tracerresolver.TracerResolver
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
