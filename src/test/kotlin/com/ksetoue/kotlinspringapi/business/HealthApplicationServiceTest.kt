@@ -1,4 +1,4 @@
-package com.ksetoue.kotlinspringapi.application
+package com.ksetoue.kotlinspringapi.business
 
 import com.ksetoue.kotlinspringapi.AbstractBaseTest
 import com.ksetoue.kotlinspringapi.template.HealthContextTemplate

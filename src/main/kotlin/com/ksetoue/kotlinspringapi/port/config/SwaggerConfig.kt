@@ -1,4 +1,4 @@
-package com.ksetoue.kotlinspringapi.port.client
+package com.ksetoue.kotlinspringapi.port.config
 
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI

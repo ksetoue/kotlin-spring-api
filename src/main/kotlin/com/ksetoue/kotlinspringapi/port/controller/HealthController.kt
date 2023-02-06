@@ -1,6 +1,6 @@
 package com.ksetoue.kotlinspringapi.port.controller
 
-import com.ksetoue.kotlinspringapi.application.HealthApplicationService
+import com.ksetoue.kotlinspringapi.business.HealthApplicationService
 import com.ksetoue.kotlinspringapi.domain.HealthContext
 import com.ksetoue.kotlinspringapi.domain.common.ErrorDetails
 import io.swagger.v3.oas.annotations.Operation
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/health")
+@RequestMapping("/")
 class HealthController(
     private val healthService: HealthApplicationService
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    @GetMapping("status")
+    @GetMapping("/startup")
     @Operation(summary = "Health status of this service", description = "Returns information about the availability of this service")
     @ApiResponses(
         value = [
@@ -31,8 +31,18 @@ class HealthController(
             ApiResponse(responseCode = "400", description = "Invalid Parameter Request", content = [Content(mediaType = "application/json", schema = Schema(implementation = ErrorDetails::class))])
         ]
     )
-    fun status(): ResponseEntity<HealthContext> {
+    fun startup(): ResponseEntity<HealthContext> {
         logger.info("attempt to check health")
         return ResponseEntity(healthService.getStatus(), HttpStatus.OK)
+    }
+
+    @GetMapping("/liveness")
+    fun live(): ResponseEntity<String> {
+        return ResponseEntity("OK", HttpStatus.OK)
+    }
+
+    @GetMapping("/readiness")
+    fun ready(): ResponseEntity<String> {
+        return ResponseEntity("OK", HttpStatus.OK)
     }
 }
