@@ -1,22 +1,27 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.7.6-SNAPSHOT"
+    // Support convention plugins written in Kotlin. Convention plugins are build scripts in 'src/main' that automatically become available as plugins in the main build.
+    id("org.jetbrains.kotlin.jvm") version "1.8.10"
+    id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.spring") version "1.6.21"
+    kotlin("plugin.spring") version "1.8.0"
 
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = "com.ksetoue"
-version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
     maven { url = uri("https://repo.spring.io/milestone") }
     maven { url = uri("https://repo.spring.io/snapshot") }
+    maven {
+        url = uri("https://plugins.gradle.org/m2/")
+    }
 }
 
 extra["springCloudVersion"] = "2021.0.5"
@@ -48,4 +53,23 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+/*
+* This configuration sets the jar name to "app"
+* */
+kotlin {
+    jvmToolchain {
+        archivesName.set("app")
+    }
+}
+/*
+*  Set specific lint rules here
+* */
+ktlint {
+    disabledRules.set(
+        setOf(
+            "no-wildcard-imports"
+        )
+    )
 }
