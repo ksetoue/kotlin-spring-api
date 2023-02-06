@@ -9,5 +9,5 @@ ENV JAVA_OPTS=-Dspring.profiles.active=production
 RUN mkdir /app
 RUN chown 1000 /app
 USER 1000:1000
-COPY --chown=1000:1000 --from=build /home/gradle/src/build/libs/kotlin-spring-microservice-0.0.1-SNAPSHOT.jar /app/spring-boot-application.jar
+COPY --chown=1000:1000 --from=build /home/gradle/src/build/libs/app-PROD.jar /app/spring-boot-application.jar
 ENTRYPOINT exec java $JAVA_OPTS -jar /app/spring-boot-application.jar

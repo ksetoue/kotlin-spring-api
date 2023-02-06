@@ -1,0 +1,56 @@
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: kotlin-service
+spec:
+  selector:
+    app: kotlin-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30082
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kotlin-service
+spec:
+  selector:
+    matchLabels:
+      app: kotlin-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: kotlin-service
+    spec:
+      containers:
+        - name: kotlin-service
+          image: kotlin-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 5
+          startupProbe:
+            httpGet:
+              path: /startup
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
